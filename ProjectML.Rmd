@@ -1,0 +1,75 @@
+---
+title: "ML Project"
+author: "Dan Boguslavsky"
+date: "4/29/2020"
+output: html_document
+---
+
+```{r Data load}
+preds<-read.csv(file="preds_sample.csv")
+train<-read.csv(file="Xy_train.csv")
+test<-read.csv(file="X_test.csv")
+```
+
+#Problem defenition:
+#1 + 2:
+In the attached Word file
+
+#Understanding the data
+#1. 
+In the attached Word file
+
+#2.
+הסתברות אפריורית זה הסטוגרמה, להראות התפגות
+בנוסף, לראות שסט הבחינה מתאים לסט האימון
+```{r}
+#Target lable:
+plot(as.factor(train$y),main = "Heart attack") # The target lable is balanced -> we excpect the model to predit around 
+                                              # 50-50 outcome without feature influence.
+#Categorial features:
+par(mfrow = c(2,4))
+plot(as.factor(train$gender),main = "gender")
+plot(as.factor(train$cp),main = "chest pain")
+plot(as.factor(train$fbs),main = "fasting blood sugar")
+plot(as.factor(train$restecg),main = "resting electrocardiographic")
+plot(as.factor(train$exang),main = "exercise induced angina")
+plot(as.factor(train$thal),main = "thal")
+plot(as.factor(train$ca),main = "number of major vessels")
+plot(as.factor(train$slope),main = "slope of the peak \n exercise ST segment")
+
+#Numeric features:
+par(mfrow = c(2,3))
+hist(train$age, main = "age") #We can see that there are some abnormalities in the age values - should be fixed
+hist(train$trestbps, main = "resting blood pressure")
+hist(train$chol, main = "serum cholestoral")
+hist(train$thalach, main = "maximum heart rate achieved")
+hist(train$oldpeak, main = "ST depression by exercis \n relative to rest")
+
+#Fearutes vs test set:
+      #Plot all / some of the features against the 'test' set to see if they are balanced?
+
+#Corralation:
+par(mfrow = c(1,1))
+library('corrplot')
+corrplot(cor(train)) # slope vs. oldpeak are a bit correlated -> Why? What does it mean?
+cor(train$slope,train$oldpeak) # -0.58 
+
+#What might have a correlation with the target lable:
+cor(train$y,train$cp)
+cor(train$y,train$thalach)
+cor(train$y,train$exang)
+cor(train$y,train$oldpeak)  #no one is greather than |0.5| #Do we have any asumptions on what can influent it else wise?
+
+#Data validation:
+#NULLs
+anyNA(train) #False
+anyNA(test) #False -> No missing values
+
+#Abnormalities:
+#We noticed the 'age' feature earlier:
+hist(train$age, main = "age")
+      #We should remove all ages greather than (?)
+      #What should we replace it with? chol, fbs and restecg are slightly correlated with age, maybe we can use it somehow?
+
+#Do we have any other assumptions regarding the data?
+```
