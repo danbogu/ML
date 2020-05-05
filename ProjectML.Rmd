@@ -20,9 +20,7 @@ In the attached Word file
 In the attached Word file
 
 #2.
-הסתברות אפריורית זה הסטוגרמה, להראות התפגות
-בנוסף, לראות שסט הבחינה מתאים לסט האימון
-```{r}
+```{r Initial ploting + correlation tests}
 #Target lable:
 plot(as.factor(train$y),main = "Heart attack") # The target lable is balanced -> we excpect the model to predit around 
                                               # 50-50 outcome without feature influence.
@@ -37,6 +35,7 @@ plot(as.factor(train$thal),main = "thal")
 plot(as.factor(train$ca),main = "number of major vessels")
 plot(as.factor(train$slope),main = "slope of the peak \n exercise ST segment")
 
+
 #Numeric features:
 par(mfrow = c(2,3))
 hist(train$age, main = "age") #We can see that there are some abnormalities in the age values - should be fixed
@@ -47,12 +46,13 @@ hist(train$oldpeak, main = "ST depression by exercis \n relative to rest")
 
 #Fearutes vs test set:
       #Plot all / some of the features against the 'test' set to see if they are balanced?
+#with GGPLOT one on the other
 
 #Corralation:
 par(mfrow = c(1,1))
 library('corrplot')
 corrplot(cor(train)) # slope vs. oldpeak are a bit correlated -> Why? What does it mean?
-cor(train$slope,train$oldpeak) # -0.58 
+cor(train$slope,train$oldpeak) # -0.58 )No meaning - slope is a ctegorial feature.
 
 #What might have a correlation with the target lable:
 cor(train$y,train$cp)
@@ -72,4 +72,63 @@ hist(train$age, main = "age")
       #What should we replace it with? chol, fbs and restecg are slightly correlated with age, maybe we can use it somehow?
 
 #Do we have any other assumptions regarding the data?
+# 
+# train_clean <- train %>% select(-id)
+# model <- lm(train$y ~ ., data = train_clean)
+# car::vif(model)
+
+```
+
+```{r Balance test}
+grouped_data<-train_predicted[-c(1,15)]
+grouped_data$type <- "train"
+temp_test<-test[-c(1)]
+temp_test$type<- "test"
+grouped_data<-rbind(grouped_data,temp_test)
+library('ggplot2')
+library('gridExtra')
+library('ggpubr')
+grid.arrange(
+ggplot(grouped_data,aes(x=age,group=type,fill=type)) + geom_histogram(alpha=0.5) + theme (legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=gender,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL), # after age prediction
+ggplot(grouped_data,aes(x=cp,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=trestbps,group=type,fill=type)) + geom_histogram(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=chol,group=type,fill=type)) + geom_histogram(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=fbs,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=restecg,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=thalach,group=type,fill=type)) + geom_histogram(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=exang,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=thal,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=ca,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=slope,group=type,fill=type)) + geom_density(alpha=0.5) + theme(legend.position="none") + ylab(NULL),
+ggplot(grouped_data,aes(x=oldpeak,group=type,fill=type)) + geom_histogram(alpha=0.5)+ theme(legend.position="none") + ylab(NULL),
+as_ggplot(get_legend(ggplot(grouped_data,aes(x=age,group=type,fill=type)) + geom_histogram(alpha=0.5))),
+ncol = 4)
+```
+
+```{r Fix abnormal ages}
+train_age_clean<-subset(train,age<80) #remove abnormanl samples
+####Make categorial vars as factors
+train_age_clean$gender<-as.factor(train_age_clean$gender)
+train_age_clean$cp<-as.factor(train_age_clean$cp)
+train_age_clean$fbs<-as.factor(train_age_clean$fbs)
+train_age_clean$restecg<-as.factor(train_age_clean$restecg)
+train_age_clean$exang<-as.factor(train_age_clean$exang)
+train_age_clean$slope<-as.factor(train_age_clean$slope)
+train_age_clean$thal<-as.factor(train_age_clean$thal)
+###Linear model
+age_pred<-lm(age~.-id,train_age_clean) 
+summary(age_pred) #we dont have too many significant vars. low R-sqr.
+####Make categorial vars as factors
+to_predict_age<-subset(train,age>80)
+to_predict_age$gender<-as.factor(to_predict_age$gender)
+to_predict_age$cp<-as.factor(to_predict_age$cp)
+to_predict_age$fbs<-as.factor(to_predict_age$fbs)
+to_predict_age$restecg<-as.factor(to_predict_age$restecg)
+to_predict_age$exang<-as.factor(to_predict_age$exang)
+to_predict_age$slope<-as.factor(to_predict_age$slope)
+to_predict_age$thal<-as.factor(to_predict_age$thal)
+###Predictions:
+to_predict_age$age<-predict(age_pred,newdata = to_predict_age)
+train_predicted<-rbind(train_age_clean,to_predict_age)
 ```
