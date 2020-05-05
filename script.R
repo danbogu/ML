@@ -129,12 +129,3 @@ grid.arrange(
   ggplot(grouped_data,aes(x=oldpeak,group=type,fill=type)) + geom_histogram(alpha=0.5)+ theme(legend.position="none") + ylab(NULL),
   as_ggplot(get_legend(ggplot(grouped_data,aes(x=age,group=type,fill=type)) + geom_histogram(alpha=0.5))),
   ncol = 4)
-
-
-ggplot(grouped_data,
-       aes(x=gender,group=type,fill=type)) + 
-  geom_histogram(alpha=0.5, stat = "count") + 
-  theme(legend.position="none") + ylab(NULL)
-
-#data preperation
-#remove from ca category 4
