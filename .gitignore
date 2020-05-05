@@ -1,3 +1,11 @@
 
 *.snapshot
 *.metadata
+.Rproj.user/shared/notebooks/paths
+.Rproj.user/shared/notebooks/patch-chunk-names
+.Rproj.user/F2D7E84/sources/s-615C97DD/lock_file
+.Rproj.user/F2D7E84/sources/s-615C97DD/53525803-contents
+.Rproj.user/F2D7E84/sources/s-615C97DD/53525803
+.Rproj.user/F2D7E84/sources/prop/INDEX
+.Rproj.user/F2D7E84/sources/prop/16F87496
+*.png
