@@ -36,6 +36,9 @@ plot(as.factor(train$thal),main = "thal")
 plot(as.factor(train$ca),main = "number of major vessels")
 plot(as.factor(train$slope),main = "slope of the peak \n exercise ST segment")
 
+plot(as.factor(train$y),main = "train data distribution")
+plot(as.factor(preds$y),main = "train data distribution")
+
 
 #Numeric features:
 par(mfrow = c(2,3))
