@@ -35,7 +35,7 @@ y_prior_risk <- sum(train_prepared$y == 1) / nrow(train)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$age,
                            prior = y_prior_risk), 
-                                   prior = p, class_labels =c("true","false"))
+                                   prior = y_prior_risk, class_labels =c("true","false"))
 ggplot(train_prepared, aes(x = age, fill = y)) +
   geom_density(alpha = 0.9)
 
@@ -46,7 +46,7 @@ calc_info_gain(train_prepared$y, train_prepared$age)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$trestbps,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 ggplot(train_prepared, aes(x = trestbps, fill = y)) +
   geom_density(alpha = 0.9)
 
@@ -57,7 +57,7 @@ calc_info_gain(train_prepared$y, train_prepared$trestbps)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$chol,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 ggplot(train_prepared, aes(x = chol, fill = y)) +
   geom_density(alpha = 0.9)
 
@@ -68,7 +68,7 @@ calc_info_gain(train_prepared$y, train_prepared$chol)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$oldpeak,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 ggplot(train_prepared, aes(x = oldpeak, fill = y)) +
   geom_density(alpha = 0.9)
 
@@ -79,7 +79,7 @@ calc_info_gain(train_prepared$y, train_prepared$oldpeak)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$thalach,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 ggplot(train_prepared, aes(x = thalach, fill = y)) +
   geom_density(alpha = 0.9)
 
@@ -91,7 +91,7 @@ calc_info_gain(train_prepared$y, train_prepared$thalach)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$gender,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$gender)
 
@@ -100,7 +100,7 @@ calc_info_gain(train_prepared$y, train_prepared$gender)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$cp,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$cp)
 
@@ -110,7 +110,7 @@ calc_info_gain(train_prepared$y, train_prepared$cp)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$fbs,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$fbs)
 
@@ -119,7 +119,7 @@ calc_info_gain(train_prepared$y, train_prepared$fbs)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$restecg,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$restecg)
 
@@ -128,7 +128,7 @@ calc_info_gain(train_prepared$y, train_prepared$restecg)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$exang,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$exang)
 
@@ -139,7 +139,7 @@ calc_info_gain(train_prepared$y, train_prepared$exang)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$slope,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$slope)
 
@@ -148,7 +148,7 @@ calc_info_gain(train_prepared$y, train_prepared$slope)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$ca,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$ca)
 
@@ -157,7 +157,7 @@ calc_info_gain(train_prepared$y, train_prepared$ca)
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_prepared$thal,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 calc_info_gain(train_prepared$y, train_prepared$thal)
 
@@ -199,13 +199,14 @@ train_final$chol_disc = factor(train_final$chol_disc,
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_final$age_gender_pct,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 risk_plot(category_risk_df(train_prepared$y == 1,
                            train_final$chol_disc,
                            prior = y_prior_risk), 
-          prior = p, class_labels =c("true","false"))
+          prior = y_prior_risk, class_labels =c("true","false"))
 
 
 calc_info_gain(train_final$y, train_final$age_gender_pct)
 calc_info_gain(train_final$y, train_final$chol_disc)
+
