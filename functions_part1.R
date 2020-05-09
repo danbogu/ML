@@ -1,4 +1,5 @@
 risk_plot <-function (risk_df, prior, class_labels = c("TRUE", "FALSE")) {
+
   risk_df %>% ggplot2::ggplot(ggplot2::aes(levels, class_rate, 
                                            color = below_prior)) + ggplot2::geom_point(size = 7) + 
     ggplot2::geom_hline(yintercept = prior, color = "darkgray") + 

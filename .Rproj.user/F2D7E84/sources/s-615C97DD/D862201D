@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589048787128.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D862201D",
+    "lastKnownWriteTime" : 1589048848,
+    "last_content_update" : 1589048848175,
+    "path" : "~/Documents/GitHub/ML/part1.R",
+    "project_path" : "part1.R",
+    "properties" : {
+        "cursorPosition" : "0,25",
+        "notebook_format" : "html_document",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
